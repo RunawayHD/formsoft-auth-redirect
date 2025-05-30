@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Redirigiendo…</title>
+  <!-- Etiqueta meta para Safari/otros -->
+  <meta http-equiv="refresh" content="0; url=https://gzpzrkgozpglzdrpdmmz.supabase.co/auth/v1/verify?token=##TOKEN##&type=recovery&redirect_to=formsoft://reset-password">
+  <script>
+    // Para todos los demás navegadores
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const token  = params.get('token');
+      if (!token) {
+        document.body.innerHTML = '<p>Error: falta el token.</p>';
+        return;
+      }
+      const url = 'https://gzpzrkgozpglzdrpdmmz.supabase.co/auth/v1/verify'
+        + '?token=' + encodeURIComponent(token)
+        + '&type=recovery'
+        + '&redirect_to=' + encodeURIComponent('formsoft://reset-password');
+      window.location.href = url;
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirigiendo…</p>
+</body>
+</html>
