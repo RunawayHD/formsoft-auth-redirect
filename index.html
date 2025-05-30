@@ -7,17 +7,18 @@
 <body>
   <p>Redirigiendo…</p>
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const token  = params.get('token');
-    if (!token) {
-      document.body.innerHTML = '<p>Error: falta el token.</p>';
-    } else {
-      const url = 'https://gzpzrkgozpglzdrpdmmz.supabase.co/auth/v1/verify'
-        + '?token=' + encodeURIComponent(token)
-        + '&type=recovery'
-        + '&redirect_to=' + encodeURIComponent('formsoft://reset-password');
-      window.location.replace(url);
-    }
+    (function() {
+      // 1) Capturamos el fragmento: "#access_token=…&refresh_token=…&type=recovery"
+      const fragment = window.location.hash;
+      if (!fragment) {
+        document.body.innerHTML = '<p style="color:red;">Error: falta el fragmento de sesión.</p>';
+        return;
+      }
+      // 2) Construimos el deep-link manteniendo TODO el fragmento
+      const deepLink = 'formsoft://reset-password' + fragment;
+      // 3) Redirigimos el navegador a tu app
+      window.location.replace(deepLink);
+    })();
   </script>
 </body>
 </html>
